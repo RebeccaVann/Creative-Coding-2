@@ -42,11 +42,9 @@ let flowerESize = 10
 function preload() {
   title = loadFont('assets/Bubble Rainbow.ttf');
   name = loadFont('assets/Hellorain.ttf');
+  img = loadImage("./assets/orange flower.png");
+  for (let i = 0; i < 3; i++) {
     wateringcan=loadImage('./assets/watering-can.png')
-    result = loadStrings('assets/characteridle.txt');
-    runresult = loadStrings('assets/characterfly.txt');
-    runresultleft = loadStrings('assets/characterflyleft.txt');
-
 }
   }
 

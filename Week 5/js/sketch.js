@@ -8,7 +8,7 @@ function preload()
 {
 	// read in the file
 	names = loadStrings("./assets/jump.txt");
-	
+
 /*	img = loadImage("./assets/redhat/Jump (1).png");
 	imageClassObject = new imageclass(img, 100,100, 335, 235);
 	imagesToDisplay[0] = imageClassObject;
@@ -40,14 +40,14 @@ function preload()
 	imageClassObject = new imageclass(img, 100,100, 335, 235);
 	imagesToDisplay[9] = imageClassObject;
 */
-	
+
 }
 
 function setup()
 {
 	createCanvas(displayWidth, displayHeight);
-	
-	// go through the file names 
+
+	// go through the file names
 	for(var k = 0; k < names.length; k++)
 	{
 		// load the image
@@ -63,21 +63,21 @@ function setup()
 
 function draw(){
 	background(240);
-	
+
 	//for(var i = 0; i < imagesToDisplay.length; i++)
 	//{
 	//	console.log("HI");
-		// display the image on the screen - iterate over the 
+		// display the image on the screen - iterate over the
 		// images to display
 		image(imagesToDisplay[i].getImage(),
-		imagesToDisplay[i].getX(), 
-		imagesToDisplay[i].getY(), 
+		imagesToDisplay[i].getX(),
+		imagesToDisplay[i].getY(),
 		imagesToDisplay[i].getW(),
 		imagesToDisplay[i].getH());
-		
-		
+
+
 		//}
-	
+
 }
 
 function changeTheDarnAnimation()
@@ -97,8 +97,8 @@ function changeTheDarnAnimation()
 	{
 		imagesToDisplay[m].moveX(10);
 	}
-	
-	
-	
-	
+
+
+
+
 }

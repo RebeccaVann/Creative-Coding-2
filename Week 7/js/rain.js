@@ -1,7 +1,7 @@
 
-class Particle {
+class RainDrops {
   constructor() {
-    //this.particle=[]
+    //this.rainDrops=[]
     this.x = mouseX;
     this.y = mouseY;
     this.xspeed = random(-3, 2);

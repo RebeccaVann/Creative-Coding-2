@@ -1,3 +1,11 @@
+
+var mushroomObjects;
+var result, runresult, runresultleft, jumpresult;
+var web;
+const particles = [];
+var health = 100;
+
+//
 var rainDrops;
 var names = [];
 var size = 25
@@ -39,10 +47,17 @@ let flowerEY = 530
 let flowerESize = 10
 
 
+
 function preload() {
+
+  result = loadStrings('assets/characteridle.txt');
+  runresult = loadStrings('assets/characterrun.txt');
+  runresultleft = loadStrings('assets/characterrunleft.txt');
+  jumpresult = loadStrings('assets/characterjump.txt');
+
   title = loadFont('assets/Bubble Rainbow.ttf');
   name = loadFont('assets/Hellorain.ttf');
-  img = loadImage("./assets/orange flower.png");
+  //img = loadImage("./assets/orange flower.png");
   for (let i = 0; i < 3; i++) {
     wateringcan=loadImage('./assets/watering-can.png')
 }
@@ -52,7 +67,13 @@ function preload() {
 
 function setup() {
 
-  createCanvas(600, 600);
+  createCanvas(800, 600);
+  mushroomObjects = createSprite(300, 500);
+  mushroomObjects.addAnimation('idle', result[0], result[result.length-1]);
+  mushroomObjects.addAnimation('run', runresult[0], runresult[runresult.length-1]);
+  mushroomObjects.addAnimation('left', runresultleft[0], runresultleft[runresultleft.length-1]);
+  mushroomObjects.addAnimation('jump', jumpresult[0], jumpresult[jumpresult.length-1]);
+
   rainDrops = [];
   angleMode(DEGREES);
 
@@ -60,6 +81,10 @@ function setup() {
   c1 = color(0, 12, 120);
   c2 = color(245, 214, 140, 10);
 
+
+      web = createSprite(700, 400);
+      //compact way to add an image
+      web.addImage(loadImage('assets/web.png'));
 }
 
 
@@ -104,6 +129,87 @@ image(wateringcan,mouseX,mouseY,100,70)
   }
 
 
+  if(keyDown('d'))
+  {
+    mushroomObjects.changeAnimation('run');
+    mushroomObjects.velocity.x += .5;
+    if(web != null)
+    {
+      if(mushroomObjects.collide(web))
+      {
+        mushroomObjects.changeAnimation('idle');
+      }
+    }
+
+  }
+  else if(keyDown('a'))
+  {
+    mushroomObjects.changeAnimation('left');
+    mushroomObjects.velocity.x -= .5;
+    if(web != null)
+    {
+      if(mushroomObjects.collide(web))
+      {
+        mushroomObjects.changeAnimation('idle');
+      }
+    }
+
+  }
+  else if(keyDown('w'))
+  {
+    mushroomObjects.changeAnimation('jump');
+
+    if(web != null)
+    {
+      if(dist(mushroomObjects.position.x,mushroomObjects.position.y,web.position.x,web.position.y) < 250)
+      {
+        createParticles(web.position.x, web.position.y);
+        health -= 1;
+        if(health <= 0)
+        {
+          web.remove();
+          web = null;
+          fill( "#DDA0DD");
+          textSize(size);
+          strokeWeight(0);
+          textFont(name);
+          text("You Win!",250,300 );
+        }
+
+      }
+    }
+
+
+  }
+  else
+  {
+    mushroomObjects.changeAnimation('idle');
+    mushroomObjects.velocity.x = 0;
+  }
+
+  mushroomObjects.debug = mouseIsPressed;
+
+  drawSprites();
+  }
+
+  function createParticles(x,y)
+  {
+  for (let i = 0; i < 5; i++) {
+  let p = new Particle(x,y);
+  particles.push(p);
+  }
+  for (let i = particles.length - 1; i >= 0; i--) {
+  particles[i].update();
+  particles[i].show();
+  if (particles[i].finished()) {
+    // remove this particle
+    particles.splice(i, 1);
+  }
+  }
+  }
+
+
+
   //run codes in rainDrop.js
   function runRainDrops(p) {
     p.run();
@@ -118,7 +224,7 @@ image(wateringcan,mouseX,mouseY,100,70)
     rainDrops.splice(0, 1);
   }
 
-}
+
 
 
 //gradient background
